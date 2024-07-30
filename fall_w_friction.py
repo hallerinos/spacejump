@@ -60,9 +60,6 @@ for A in np.linspace(0, 4, 10):
                 altitude[i] = 0
                 break
 
-        # Convert velocity to km/h
-        velocity_kmh = velocity * 3.6
-
         ax.set_xlabel('$h\\ {\\rm [km]}$')
         ax.set_ylabel('$v\\ {\\rm [m/s]}$')
         ax.plot(altitude/1000, velocity)
