@@ -1,7 +1,7 @@
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
-from ode_methods import euler, rk4
+from ode_methods_solution import euler, rk4
 import pandas as pd
 
 gr = 1.61803398875
@@ -26,7 +26,7 @@ fig, ax = plt.subplots()
 # Time array
 dt = 0.1
 for A in np.linspace(0, 8, 10):
-    for H in np.linspace(1000, 10000, 10):
+    for H in np.linspace(1000, 5000, 2):
         t = np.arange(0, 600, dt)
 
         # Arrays to store results
