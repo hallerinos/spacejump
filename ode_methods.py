@@ -5,10 +5,6 @@ def euler(f, t, y, h):
     fnext = y + f(t,y)*h
     return fnext
 
-def euler2(y, f, h):
-    fnext = y + f*h
-    return fnext
-
 def rk4(f, t, y, h):
     k1 = f(t, y)
     k2 = f(t + h/2, y + h*k1/2)
