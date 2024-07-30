@@ -24,7 +24,7 @@ initial_velocity = 0  # Initial velocity (m/s)
 fig, ax = plt.subplots()
 
 # Time array
-dt = 2
+dt = 0.1
 for A in np.linspace(0, 8, 10):
     for H in np.linspace(1000, 10000, 10):
         t = np.arange(0, 600, dt)
@@ -47,7 +47,7 @@ for A in np.linspace(0, 8, 10):
             F_g = lambda t,y : m*g
             a_tot = lambda t,y : (F_drag(t,y) + F_g(t,y))/m
             
-            # Update velocity and position using Euler method
+            # Update velocity and position using Euler/RK4 method
             velocity[i] = rk4(a_tot, t[i], velocity[i-1], dt)
             v_tot = lambda t,y : velocity[i]
             altitude[i] = rk4(v_tot, t[i], altitude[i-1], dt)
