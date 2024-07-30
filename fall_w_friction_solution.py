@@ -1,7 +1,7 @@
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
-from ode_methods import euler
+from ode_methods import euler, rk4
 import pandas as pd
 
 gr = 1.61803398875
@@ -24,7 +24,7 @@ initial_velocity = 0  # Initial velocity (m/s)
 fig, ax = plt.subplots()
 
 # Time array
-dt = 0.1
+dt = 2
 for A in np.linspace(0, 8, 10):
     for H in np.linspace(1000, 10000, 10):
         t = np.arange(0, 600, dt)
@@ -41,16 +41,16 @@ for A in np.linspace(0, 8, 10):
         for i in range(1, len(t)):
             # Calculate air density
             rho_h = rho * np.exp(-altitude[i-1] / H)
-            
-            # Calculate drag force
-            F_drag = 0.5 * rho_h * Cd * A * (velocity[i-1]**2)
-            
-            # Calculate acceleration
-            a = g - (F_drag / m)*np.sign(velocity[i-1])
+
+            # Define the force functions
+            F_drag = lambda t,y : 0.5 * rho_h * Cd * A * y**2
+            F_g = lambda t,y : m*g
+            a_tot = lambda t,y : (F_drag(t,y) + F_g(t,y))/m
             
             # Update velocity and position using Euler method
-            velocity[i] = integrate_euler(velocity[i-1], a, dt)
-            altitude[i] = integrate_euler(altitude[i-1], velocity[i], dt)
+            velocity[i] = rk4(a_tot, t[i], velocity[i-1], dt)
+            v_tot = lambda t,y : velocity[i]
+            altitude[i] = rk4(v_tot, t[i], altitude[i-1], dt)
             
             # Stop the simulation if we reach the ground
             if altitude[i] <= 0:
