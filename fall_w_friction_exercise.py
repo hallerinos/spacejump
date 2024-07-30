@@ -47,7 +47,7 @@ for A in np.linspace(0, 8, 10):
             F_g = lambda t,y :
             a_tot = lambda t,y :
             
-            # Update velocity and position using Euler method
+            # Update velocity and position using Euler/RK4 method
             velocity[i] = rk4(a_tot, t[i], velocity[i-1], dt)
             # Define the velocity function
             v_tot = lambda t,y :
