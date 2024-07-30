@@ -8,10 +8,9 @@ gr = 1.61803398875
 s = 4
 mpl.rcParams['text.usetex'] = True
 mpl.rcParams['figure.figsize'] = (gr*s, s)
-# plt.rc('text.latex', preamble=r'\usepackage{bm,braket}')
 
 # Constants
-g = -9.8  # Acceleration due to gravity (m/s^2)
+g = -9.81  # Acceleration due to gravity (m/s^2)
 m = 118  # Mass of Baumgartner with equipment (kg)
 rho = 1.2  # Air density at sea level (kg/m^3)
 A = 0.9  # Approximate frontal area (m^2)
@@ -24,12 +23,11 @@ initial_velocity = 0  # Initial velocity (m/s)
 # Create the plot
 fig, ax = plt.subplots()
 
-trajectory = pd.read_csv('velocity_data.csv')
-
 # Time array
 dt = 0.1
-for A in np.linspace(0, 4, 10):
-    for H in np.linspace(1000,10000,10):
+for A in np.linspace(0, 8, 10):
+    for H in np.linspace(1000, 10000, 10):
+    # for H in [5000]:
         t = np.arange(0, 500, dt)  # Time array from 0 to 600 seconds
 
         # Arrays to store results
@@ -64,9 +62,12 @@ for A in np.linspace(0, 4, 10):
         ax.set_ylabel('$v\\ {\\rm [m/s]}$')
         ax.plot(altitude/1000, velocity)
 
+# compare with actual data
+trajectory = pd.read_csv('velocity_data.csv')
 ax.scatter(trajectory['h'], -trajectory['v'], zorder=0)
 
 ax.set_xlim([0, initial_altitude/1000])
+
 # Set title and display the plot
 plt.gca().invert_xaxis()
 plt.gca().invert_yaxis()
