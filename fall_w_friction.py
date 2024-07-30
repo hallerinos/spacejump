@@ -48,11 +48,13 @@ for i in range(1, len(t)):
     F_g = lambda t,y : 0
     a_tot = lambda t,y : 0
     
-    # Update velocity and position using Euler/RK4 method
-    velocity[i] = euler(a_tot, t[i], velocity[i-1], dt)
+    # select Euler/RK4 method
+    integrator = euler
+    # Update velocity and position
+    velocity[i] = integrator(a_tot, t[i], velocity[i-1], dt)
     # Define the velocity function
     v_tot = lambda t,y : 0
-    altitude[i] = euler(v_tot, t[i], altitude[i-1], dt)
+    altitude[i] = integrator(v_tot, t[i], altitude[i-1], dt)
     
     # Stop the simulation if we reach the ground
     if altitude[i] <= 0:
@@ -65,7 +67,7 @@ ax.plot(altitude/1000, velocity)
 
 # compare with actual data
 trajectory = pd.read_csv('velocity_data.csv')
-# ax.scatter(trajectory['h'], -trajectory['v'], zorder=0)
+ax.scatter(trajectory['h'], -trajectory['v'], zorder=0)
 
 ax.set_xlim([0, initial_altitude/1000])
 
