@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def euler(f, t, y, h):
-    fnext = y + f(t,y)*h
+    fnext = 0
     return fnext
 
 def rk4(f, t, y, h):
@@ -14,4 +14,4 @@ def rk4(f, t, y, h):
     return y + h/6*(k1 + 2*k2 + 2*k3 + k4)
 
 if __name__ == "__main__":
-    0   # implement example for Euler and RK4
+    0   # implement example for Euler
