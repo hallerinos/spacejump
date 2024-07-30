@@ -42,7 +42,7 @@ for A in np.linspace(0, 4, 10):
 
         # Simulation loop
         for i in range(1, len(t)):
-            # Calculate air density (simplified model)
+            # Calculate air density
             rho_h = rho * np.exp(-altitude[i-1] / H)
             
             # Calculate drag force
