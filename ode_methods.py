@@ -1,4 +1,4 @@
-def integrate_euler(fprev, df, dt):
+def euler(fprev, df, dt):
     fnext = fprev + df*dt
     return fnext
 

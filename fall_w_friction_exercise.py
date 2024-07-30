@@ -1,7 +1,7 @@
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
-from ode_methods import integrate_euler
+from ode_methods import euler
 import pandas as pd
 
 gr = 1.61803398875
