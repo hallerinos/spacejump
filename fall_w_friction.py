@@ -27,8 +27,7 @@ fig, ax = plt.subplots()
 dt = 0.1
 for A in np.linspace(0, 8, 10):
     for H in np.linspace(1000, 10000, 10):
-    # for H in [5000]:
-        t = np.arange(0, 500, dt)  # Time array from 0 to 600 seconds
+        t = np.arange(0, 600, dt)
 
         # Arrays to store results
         altitude = np.zeros_like(t)
