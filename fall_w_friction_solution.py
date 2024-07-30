@@ -11,9 +11,8 @@ mpl.rcParams['figure.figsize'] = (gr*s, s)
 
 # Constants
 g = -9.81  # Acceleration due to gravity (m/s^2)
-m = 118  # Mass of Baumgartner with equipment (kg)
+m = 127  # Mass of Baumgartner with equipment (kg)
 rho = 1.2  # Air density at sea level (kg/m^3)
-A = 0.9  # Approximate frontal area (m^2)
 Cd = 1  # Drag coefficient (dimensionless)
 
 # Initial conditions
@@ -25,8 +24,8 @@ fig, ax = plt.subplots()
 
 # Time array
 dt = 0.1
-for A in np.linspace(0, 8, 10):
-    for H in np.linspace(1000, 5000, 2):
+for A in [0.8]:
+    for H in [7000]:
         t = np.arange(0, 600, dt)
 
         # Arrays to store results
@@ -57,19 +56,20 @@ for A in np.linspace(0, 8, 10):
                 altitude[i] = 0
                 break
 
-        ax.set_xlabel('$h\\ {\\rm [km]}$')
+        ax.set_xlabel('$d\\ {\\rm [km]}$')
         ax.set_ylabel('$v\\ {\\rm [m/s]}$')
-        ax.plot(altitude/1000, velocity)
+        ax.plot(altitude/1000, velocity, color='black', label='Numerical Integration')
 
 # compare with actual data
 trajectory = pd.read_csv('velocity_data.csv')
-ax.scatter(trajectory['h'], -trajectory['v'], zorder=0)
+ax.scatter(trajectory['h'], -trajectory['v'], zorder=0, label="Baumgartner's trajectory")
 
 ax.set_xlim([0, initial_altitude/1000])
 
 # Set title and display the plot
 plt.gca().invert_xaxis()
 plt.gca().invert_yaxis()
+plt.legend()
 plt.title("Felix Baumgartner's Space Jump")
 fig.tight_layout()
 plt.show()
