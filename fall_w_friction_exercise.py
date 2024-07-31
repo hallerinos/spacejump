@@ -48,9 +48,9 @@ for i in range(1, len(t)):
     a_tot = lambda t,y : 0  # MODIFY!
     
     # Update velocity and position using Euler/RK4 method
-    velocity[i] = rk4(a_tot, t[i-1], velocity[i-1], dt)
+    velocity[i] = euler(a_tot, t[i-1], velocity[i-1], dt)
     v_tot = lambda t,y : velocity[i]
-    altitude[i] = rk4(v_tot, t[i-1], altitude[i-1], dt)
+    altitude[i] = euler(v_tot, t[i-1], altitude[i-1], dt)
     
     # Stop the simulation if we reach the ground
     if altitude[i] <= 0:
