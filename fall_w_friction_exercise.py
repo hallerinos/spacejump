@@ -1,7 +1,7 @@
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
-from ode_methods_exercise import euler, rk4
+from ode_methods_solution import euler, rk4
 import pandas as pd
 
 gr = 1.61803398875
@@ -23,11 +23,10 @@ initial_velocity = 0  # Initial velocity (m/s)
 fig, ax = plt.subplots()
 
 # Time array
-dt = 2
+dt = 0.1
 A = 1
-H = 6000
+H = 6700
 
-# time domain for the integration
 t = np.arange(0, 600, dt)
 
 # Arrays to store results
@@ -35,45 +34,43 @@ altitude = np.zeros_like(t)
 velocity = np.zeros_like(t)
 
 # Set initial conditions
-altitude[0] = 0
-velocity[0] = 0
+altitude[0] = initial_altitude
+velocity[0] = initial_velocity
 
 # Simulation loop
 for i in range(1, len(t)):
     # Calculate air density
-    rho_h = 0
+    rho_h = 0  # MODIFY!
 
     # Define the force functions
-    F_drag = lambda t,y : 0
-    F_g = lambda t,y : 0
-    a_tot = lambda t,y : 0
+    F_drag = lambda t,y : 0  # MODIFY!
+    F_g = lambda t,y : 0  # MODIFY!
+    a_tot = lambda t,y : 0  # MODIFY!
     
-    # select Euler/RK4 method
-    integrator = euler
-    # Update velocity and position
-    velocity[i] = integrator(a_tot, t[i-1], velocity[i-1], dt)
-    # Define the velocity function
-    v_tot = lambda t,y : 0
-    altitude[i] = integrator(v_tot, t[i-1], altitude[i-1], dt)
+    # Update velocity and position using Euler/RK4 method
+    velocity[i] = rk4(a_tot, t[i-1], velocity[i-1], dt)
+    v_tot = lambda t,y : velocity[i]
+    altitude[i] = rk4(v_tot, t[i-1], altitude[i-1], dt)
     
     # Stop the simulation if we reach the ground
     if altitude[i] <= 0:
         altitude[i] = 0
         break
 
-ax.set_xlabel('$h\\ {\\rm [km]}$')
+ax.set_xlabel('$d\\ {\\rm [km]}$')
 ax.set_ylabel('$v\\ {\\rm [m/s]}$')
-ax.plot(altitude/1000, velocity)
+ax.plot(altitude/1000, velocity, color='black', label='Numerical Integration')
 
 # compare with actual data
 trajectory = pd.read_csv('velocity_data.csv')
-ax.scatter(trajectory['h'], -trajectory['v'], zorder=0)
+ax.scatter(trajectory['h'], -trajectory['v'], zorder=0, label="Baumgartner's trajectory")
 
 ax.set_xlim([0, initial_altitude/1000])
 
 # Set title and display the plot
 plt.gca().invert_xaxis()
 plt.gca().invert_yaxis()
+plt.legend()
 plt.title("Felix Baumgartner's Space Jump")
 fig.tight_layout()
 plt.show()
