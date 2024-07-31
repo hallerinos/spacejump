@@ -11,7 +11,7 @@ mpl.rcParams['figure.figsize'] = (gr*s, s)
 
 # Constants
 g = -9.81  # Acceleration due to gravity (m/s^2)
-m = 118  # Mass of Baumgartner with equipment (kg)
+m = 127  # Mass of Baumgartner with equipment (kg)
 rho = 1.2  # Air density at sea level (kg/m^3)
 Cd = 1  # Drag coefficient (dimensionless)
 
